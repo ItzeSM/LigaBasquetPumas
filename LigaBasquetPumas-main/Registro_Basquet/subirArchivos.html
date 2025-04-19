@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subir Documentos a Supabase</title>
+
+  <!-- Importmap para usar supabase-js desde esm.sh -->
+  <script type="importmap">
+    {
+      "imports": {
+        "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.39.7"
+      }
+    }
+  </script>
+
+  <!-- Vinculando el archivo de estilos CSS -->
+  <link rel="stylesheet" href="estilosDocumentos.css">
+</head>
+<body>
+  <h1>Formulario de Subida de Documentos</h1>
+
+  <form id="form-documentos">
+    <label for="curp_file">Sube tu CURP:</label>
+    <input type="file" id="curp_file" accept=".pdf" required><br>
+
+    <label for="acta_file">Sube tu Acta de Nacimiento:</label>
+    <input type="file" id="acta_file" accept=".pdf" required><br>
+
+    <label for="credencial_file">Sube tu Credencial:</label>
+    <input type="file" id="credencial_file" accept=".pdf" required><br>
+
+    <label for="ine_file">Sube tu INE:</label>
+    <input type="file" id="ine_file" accept=".pdf" required><br>
+
+    <label for="foto_file">Sube tu Foto:</label>
+    <input type="file" id="foto_file" accept=".jpg, .jpeg, .png" required><br><br>
+
+    <button type="button" id="subirArchivo">Subir Documentos</button>
+  </form>
+
+  <!-- Agregar un botón "Regresar" para volver al formulario de inscripción -->
+  <button type="button" id="regresarFormulario">Regresar al Formulario</button>
+
+  <script src="subirDocumentos.js" type="module"></script>
+</body>
+</html>
