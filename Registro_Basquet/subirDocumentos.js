@@ -55,8 +55,7 @@ document.getElementById('subirArchivo').addEventListener('click', async function
       alert("Hubo un error al guardar los datos en la base de datos.");
     } else {
       alert("Documentos subidos correctamente.");
-      // Redirigir a una página de éxito o confirmar la subida
-      window.location.href = 'confirmacion.html'; // Reemplaza con la URL que desees
+      
     }
   } catch (err) {
     console.error("Error al subir los archivos:", err);
