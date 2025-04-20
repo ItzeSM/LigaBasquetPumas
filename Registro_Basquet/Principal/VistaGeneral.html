@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel - Club de Básquetbol</title>
+  <link rel="stylesheet" href="vistageneral.styles.css" />
+ 
+  <script type="importmap">
+    {
+      "imports": {
+        "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.39.7"
+      }
+    }
+  </script>
+  
+</head>
+<body>
+  <header>
+    <h1>🏀 Club de Básquetbol</h1>
+    <p>Bienvenido, Admin</p>
+  </header>
+
+  <main class="tablero">
+    <h2>Resumen por Categoría</h2>
+
+    <div id="categorias" class="categorias">
+      <!-- Las categorías se cargarán dinámicamente aquí -->
+    </div>
+
+    <div class="acciones">
+      <button onclick="window.location.href='../Registro/formularioInscripcion.html';">➕ Agregar jugador</button>
+
+      <button>📄 Descargar reporte</button>
+      <button id="logout">🚪 Cerrar sesión</button>
+    </div>
+  </main>
+
+  <script type="module" src="/Principal/panel.js"></script>
+</body>
+</html>

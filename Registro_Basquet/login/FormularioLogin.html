@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login</title>
+  <link rel="stylesheet" href="login-styles.css" />
+  <script type="importmap">
+    {
+      "imports": {
+        "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.39.7"
+      }
+    }
+  </script>
+</head>
+<body>
+  <div class="login-container"> <!-- Cambié 'container' por 'login-container' -->
+    <h2>Iniciar sesión</h2>
+    <input type="email" id="loginEmail" placeholder="Correo electrónico" required />
+    <input type="password" id="loginPassword" placeholder="Contraseña" required />
+    <button id="loginButton">Entrar</button>
+    <p>¿No tienes cuenta? <a href="Registrar.html">Regístrate aquí</a></p>
+  </div>
+
+  <!-- Cargar el script de login.js -->
+  <script type="module" src="login.js"></script>
+</body>
+
+</html>

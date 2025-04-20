@@ -1,0 +1,107 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f5f5f5;
+    color: #333;
+  }
+  
+  header {
+    background: #1e90ff;
+    color: white;
+    padding: 1.2rem;
+    text-align: center;
+  }
+  
+  .tablero {
+    padding: 1.5rem;
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  .categorias {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+  
+  .categoria {
+    background: white;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    text-align: center;
+  }
+  
+  .categoria h3 {
+    margin-top: 0;
+    color: #1e90ff;
+  }
+  
+  .categoria button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background: #1e90ff;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .categoria button:hover {
+    background: #1c86ee;
+  }
+  
+  .acciones {
+    margin-top: 2rem;
+    text-align: center;
+  }
+  
+  .acciones button {
+    margin: 0.5rem;
+    padding: 0.6rem 1rem;
+    background: #333;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .acciones button:hover {
+    background: #555;
+  }
+  
+  /* Estilo para los detalles de la categoría */
+#jugadores-lista {
+  margin-top: 20px;
+}
+
+#jugadores-lista ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+#jugadores-lista li {
+  background-color: #f9f9f9;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #218838;
+}
