@@ -13,7 +13,6 @@
       }
     }
   </script>
-  
 </head>
 <body>
   <header>
@@ -31,11 +30,54 @@
     <div class="acciones">
       <button onclick="window.location.href='../Registro/formularioInscripcion.html';">➕ Agregar jugador</button>
 
-      <button>📄 Descargar reporte</button>
+      <button onclick="enviarRecordatorios()">📲 Enviar recordatorios de pago</button>
+
       <button id="logout">🚪 Cerrar sesión</button>
     </div>
   </main>
 
+  <script>
+    // Función para enviar recordatorios de pago
+    function enviarRecordatorios() {
+      fetch("http://127.0.0.1:5000/enviar-recordatorios")
+            .then(response => {
+                if (response.status === 403) {
+                    alert("⚠️ Hoy no es un día permitido para enviar recordatorios. Intenta otro día.");
+                    return;
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data?.recordatorios_enviados?.length > 0) {
+                    alert("✅ Se enviaron recordatorios de pago a los siguientes contactos:\n\n" + data.recordatorios_enviados.join("\n"));
+                } else if (data) {
+                    alert("ℹ️ No se encontraron jugadores con pagos pendientes para hoy.");
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                alert("❌ Ocurrió un error al intentar enviar los recordatorios. Por favor, intenta más tarde.");
+            });
+    }
+
+    // Función para cerrar sesión con confirmación
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('logout').addEventListener('click', () => {
+            const confirmar = confirm("¿Estás seguro de que deseas cerrar sesión?");
+            if (confirmar) {
+                // Borra cualquier dato de sesión (ajusta si usas Supabase Auth o similar)
+                localStorage.removeItem('adminSesionIniciada');
+
+                // Mensaje de despedida
+                alert("Sesión cerrada correctamente. ¡Hasta pronto!");
+
+                // Redirigir al login
+                window.location.href = '/login/FormularioLogin.html';
+            }
+        });
+    });
+  </script>
+  
   <script type="module" src="/Principal/panel.js"></script>
 </body>
 </html>

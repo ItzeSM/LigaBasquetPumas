@@ -2,9 +2,8 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Registro de Alumno</title>
+  <title>Registro de Alumno - Liga de Básquetbol</title>
   <link rel="stylesheet" href="estilos.css">
-  <!-- Importmap para usar supabase-js desde esm.sh -->
   <script type="importmap">
     {
       "imports": {
@@ -14,77 +13,82 @@
   </script>
 </head>
 <body>
-  <h1>Formulario de Registro de Alumno</h1>
-  <form id="form-inscripcion">
-    <label for="nombre">Nombre:</label>
-    <input type="text" id="nombre" required><br>
+  <div class="contenedor-principal">
+    <h1>Formulario de Registro de Alumno</h1>
+    <form id="form-inscripcion">
+      <label for="nombre">Nombre(s):</label>
+      <input type="text" id="nombre" required>
 
-    <label for="apellido_paterno">Apellido Paterno:</label>
-    <input type="text" id="apellido_paterno" required><br>
+      <label for="apellido_paterno">Apellido Paterno:</label>
+      <input type="text" id="apellido_paterno" required>
 
-    <label for="apellido_materno">Apellido Materno:</label>
-    <input type="text" id="apellido_materno" required><br>
-    <label for="genero">Género:</label>
-    
-    <select name="genero" id="genero" required>
-      <option value="">Selecciona una opción</option>
-      <option value="Masculino">Masculino</option>
-      <option value="Femenino">Femenino</option>
-      <option value="Otro">Otro</option>
-    </select>
-    
-    <label for="curp">CURP:</label>
-    <input type="text" id="curp" required><br>
+      <label for="apellido_materno">Apellido Materno:</label>
+      <input type="text" id="apellido_materno" required>
 
-    <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
-    <input type="date" id="fecha_nacimiento" required><br>
+      <label for="genero">Género:</label>
+      <select id="genero" required>
+        <option value="">Selecciona una opción</option>
+        <option value="Masculino">Masculino</option>
+        <option value="Femenino">Femenino</option>
+        <option value="Otro">Otro</option>
+      </select>
 
-    <label for="telefono">Teléfono:</label>
-    <input type="text" id="telefono" required><br>
+      <label for="curp">CURP:</label>
+      <input type="text" id="curp" required>
 
-    <label for="correo">Correo:</label>
-    <input type="email" id="correo"><br>
+      <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+      <input type="date" id="fecha_nacimiento" required>
 
-    <label for="nombre_tutor">Nombre del Tutor:</label>
-    <input type="text" id="nombre_tutor" required><br>
+      <label for="telefono">Teléfono:</label>
+      <input type="text" id="telefono" required>
 
-    <!-- Alergias -->
-    <label>¿Tiene alergias?</label><br>
-    <button type="button" id="alergias_si" class="btn-opcion">Sí</button>
-    <button type="button" id="alergias_no" class="btn-opcion">No</button><br>
-    <div id="alergias_detalles_container" class="oculto">
-      <label for="alergias_detalles">Especifica las alergias:</label>
-      <textarea id="alergias_detalles"></textarea><br>
+      <label for="correo">Correo electrónico:</label>
+      <input type="email" id="correo">
+
+      <label for="nombre_tutor">Nombre del Tutor:</label>
+      <input type="text" id="nombre_tutor" required>
+
+      <!-- Alergias -->
+      <label>¿Tiene alergias?</label>
+      <div class="grupo-opciones">
+        <button type="button" id="alergias_si" class="btn-opcion">Sí</button>
+        <button type="button" id="alergias_no" class="btn-opcion">No</button>
+      </div>
+      <div id="alergias_detalles_container" class="oculto">
+        <label for="alergias_detalles">Especifica las alergias:</label>
+        <textarea id="alergias_detalles"></textarea>
+      </div>
+
+      <!-- Cirugías -->
+      <label>¿Ha tenido cirugías?</label>
+      <div class="grupo-opciones">
+        <button type="button" id="cirugias_si" class="btn-opcion">Sí</button>
+        <button type="button" id="cirugias_no" class="btn-opcion">No</button>
+      </div>
+      <div id="cirugias_detalles_container" class="oculto">
+        <label for="cirugias_detalles">Especifica las cirugías:</label>
+        <textarea id="cirugias_detalles"></textarea>
+      </div>
+
+      <!-- Afecciones -->
+      <label>¿Tiene afecciones?</label>
+      <div class="grupo-opciones">
+        <button type="button" id="afecciones_si" class="btn-opcion">Sí</button>
+        <button type="button" id="afecciones_no" class="btn-opcion">No</button>
+      </div>
+      <div id="afecciones_detalles_container" class="oculto">
+        <label for="afecciones_detalles">Especifica las afecciones:</label>
+        <textarea id="afecciones_detalles"></textarea>
+      </div>
+
+      <button type="submit">Registrar</button>
+    </form>
+
+    <div id="monto_pago_container" class="oculto">
+      <h3>Monto a pagar:</h3>
+      <p id="monto_pago"></p>
     </div>
-
-    <!-- Cirugías -->
-    <label>¿Ha tenido cirugías?</label><br>
-    <button type="button" id="cirugias_si" class="btn-opcion">Sí</button>
-    <button type="button" id="cirugias_no" class="btn-opcion">No</button><br>
-    <div id="cirugias_detalles_container" class="oculto">
-      <label for="cirugias_detalles">Especifica las cirugías:</label>
-      <textarea id="cirugias_detalles"></textarea><br>
-    </div>
-
-    <!-- Afecciones -->
-    <label>¿Tiene afecciones?</label><br>
-    <button type="button" id="afecciones_si" class="btn-opcion">Sí</button>
-    <button type="button" id="afecciones_no" class="btn-opcion">No</button><br>
-    <div id="afecciones_detalles_container" class="oculto">
-      <label for="afecciones_detalles">Especifica las afecciones:</label>
-      <textarea id="afecciones_detalles"></textarea><br>
-    </div>
-
-    
-    <button type="submit">Registrar</button>
-  </form>
-
-  <div id="monto_pago_container" class="oculto">
-    <h3>Monto a pagar:</h3>
-    <p id="monto_pago"></p>
   </div>
-
-
 
   <script type="module" src="conexionSupabase.js"></script>
   <script type="module" src="registrarAlumno.js"></script>
