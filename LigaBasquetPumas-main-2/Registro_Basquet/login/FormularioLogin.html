@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login</title>
+  <link rel="stylesheet" href="login-styles.css" />
+  <script type="importmap">
+    {
+      "imports": {
+        "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.39.7"
+      }
+    }
+  </script>
+  <style>
+   :root {
+  --primary: #FF6B00;
+  --primary-dark: #E05A00;
+  --secondary: #2D3748;
+  --accent: #FFA500;
+  --light: #FFF4E6;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #f8f8f8;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ff6b00' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-container {
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 420px;
+  padding: 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.login-header h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--secondary);
+  margin-bottom: 0.5rem;
+}
+
+.login-header p {
+  color: #718096;
+  font-size: 1rem;
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.input-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #A0AEC0;
+  transition: all 0.3s ease;
+}
+
+input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  padding-left: 2.5rem;
+  border: 2px solid #E2E8F0;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background-color: #F8FAFC;
+  color: var(--secondary);
+  margin-bottom: 1rem;
+}
+
+.input-container {
+  position: relative;
+}
+
+.input-container input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  padding-left: 2.5rem; /* Para hacer espacio para los íconos */
+  border: 2px solid #E2E8F0;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  background-color: #F8FAFC;
+}
+
+.input-container i {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #A0AEC0;
+  font-size: 1.2rem;
+}
+
+input:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.2);
+}
+
+input::placeholder {
+  color: #A0AEC0;
+}
+
+button {
+  width: 100%;
+  padding: 0.875rem;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  margin-top: 1rem;
+}
+
+button:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+button::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: -100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: 0.5s;
+}
+
+button:hover::after {
+  left: 100%;
+}
+
+p {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: #718096;
+  font-size: 0.95rem;
+}
+
+p a {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+p a:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
+.logo {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.logo-image {
+  width: 80px;
+  height: 80px;
+}
+
+.basketball-court {
+  position: absolute;
+  bottom: -80px;
+  right: -80px;
+  width: 200px;
+  height: 200px;
+  opacity: 0.05;
+  z-index: 0;
+}
+
+/* Animación del balón encestando */
+.basketball-animation {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  width: 100px;
+  height: 120px;
+  z-index: 1;
+}
+
+.basketball {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: var(--primary);
+  border-radius: 50%;
+  top: 0;
+  left: 35px;
+  z-index: 2;
+  animation: bounce 2s infinite ease-in-out;
+}
+
+.basketball::before,
+.basketball::after {
+  content: "";
+  position: absolute;
+  background: #000;
+  opacity: 0.1;
+}
+
+.basketball::before {
+  width: 100%;
+  height: 2px;
+  top: 50%;
+  left: 0;
+}
+
+.basketball::after {
+  width: 2px;
+  height: 100%;
+  top: 0;
+  left: 50%;
+}
+
+.hoop {
+  position: absolute;
+  width: 40px;
+  height: 30px;
+  border: 3px solid #666;
+  border-bottom: none;
+  border-radius: 40px 40px 0 0;
+  bottom: 20px;
+  left: 30px;
+  z-index: 1;
+}
+
+.backboard {
+  position: absolute;
+  width: 60px;
+  height: 40px;
+  background: #ddd;
+  bottom: 50px;
+  left: 20px;
+  z-index: 0;
+}
+
+.net {
+  position: absolute;
+  width: 30px;
+  height: 20px;
+  border-left: 2px dashed #ccc;
+  border-right: 2px dashed #ccc;
+  bottom: 0;
+  left: 35px;
+  z-index: 0;
+}
+
+@keyframes bounce {
+  0% {
+    top: 0;
+    animation-timing-function: ease-in;
+  }
+  40% {
+    top: 80px;
+    animation-timing-function: ease-out;
+  }
+  55% {
+    top: 50px;
+    animation-timing-function: ease-in;
+  }
+  65% {
+    top: 80px;
+    animation-timing-function: ease-out;
+  }
+  75% {
+    top: 70px;
+    animation-timing-function: ease-in;
+  }
+  82% {
+    top: 80px;
+    animation-timing-function: ease-out;
+  }
+  90% {
+    top: 75px;
+    animation-timing-function: ease-in;
+  }
+  100% {
+    top: 80px;
+    animation-timing-function: ease-out;
+  }
+}
+
+.pumas-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.pumas-text {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin-left: 0.5rem;
+  letter-spacing: 1px;
+}
+  
+  </style>
+</head>
+
+  <head>
+    <!-- Agregar Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  </head>
+  
+
+<body>
+  <div class="login-container">
+    <div class="login-header">
+      <div class="pumas-logo">
+        <svg class="logo-image" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#FF6B00">
+         
+        </svg>
+        <span class="pumas-text">Academia Pumas</span>
+      </div>
+      <h2>Iniciar Sesión</h2>
+      <p>Ingresa tus credenciales para acceder</p>
+    </div>
+
+        <!-- login.html -->
+        <form id="loginForm">
+          <div>
+            <label for="loginEmail">Correo Electrónico:</label>
+            <div class="input-container">
+              <i class="fas fa-envelope"></i> <!-- Ícono de correo -->
+              <input type="email" id="loginEmail" required placeholder="Correo Electrónico">
+            </div>
+          </div>
+        
+          <div>
+            <label for="loginPassword">Contraseña:</label>
+            <div class="input-container">
+              <i class="fas fa-lock"></i> <!-- Ícono de candado -->
+              <input type="password" id="loginPassword" required placeholder="Contraseña">
+            </div>
+          </div>
+        
+          <div>
+            <button type="submit" id="loginButton">Iniciar sesión</button>
+          </div>
+        </form>
+        
+        <p>¿No tienes cuenta? <a href="Registrar.html">Regístrate aquí</a></p>
+    
+
+    <!-- Animación de balón encestando -->
+    <div class="basketball-animation">
+      <div class="basketball"></div>
+      <div class="backboard"></div>
+      <div class="hoop"></div>
+      <div class="net"></div>
+    </div>
+    
+    <!-- Imagen de fondo de cancha de baloncesto -->
+    <svg class="basketball-court" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <rect x="10" y="10" width="180" height="180" fill="none" stroke="#FF6B00" stroke-width="2"/>
+      <circle cx="100" cy="100" r="30" fill="none" stroke="#FF6B00" stroke-width="2"/>
+      <line x1="10" y1="100" x2="190" y2="100" stroke="#FF6B00" stroke-width="2"/>
+      <path d="M10,70 A60,60 0 0,1 70,10" fill="none" stroke="#FF6B00" stroke-width="2"/>
+      <path d="M190,70 A60,60 0 0,0 130,10" fill="none" stroke="#FF6B00" stroke-width="2"/>
+      <path d="M10,130 A60,60 0 0,0 70,190" fill="none" stroke="#FF6B00" stroke-width="2"/>
+      <path d="M190,130 A60,60 0 0,1 130,190" fill="none" stroke="#FF6B00" stroke-width="2"/>
+    </svg>
+  </div>
+
+  <!-- Cargar el script de login.js -->
+  <script type="module" src="login.js"></script>
+</body>
+</html>

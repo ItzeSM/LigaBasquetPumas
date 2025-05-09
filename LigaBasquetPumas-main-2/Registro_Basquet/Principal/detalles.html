@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Detalles de Categoría</title>
+  <link rel="stylesheet" href="detalles.styles.css" />
+
+  <script type="importmap">
+    {
+      "imports": {
+        "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.39.7"
+      }
+    }
+  </script>
+  <style>
+    body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f2f2f2;
+    padding: 20px;
+    color: #333;
+  }
+  
+  header {
+    background-color: #db7c2a;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+  }
+  
+  header a {
+    color: #d2cc25;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  main h2 {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    color: #05338e;
+  }
+  
+  #jugadores-lista ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  #jugadores-lista li {
+    background-color: white;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: relative;
+  }
+  
+  #jugadores-lista li strong {
+    font-size: 1.1em;
+    color: #1a237e;
+  }
+  
+  .estado-con-boton {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+  }
+  
+  .estado-pago {
+    font-weight: bold;
+    padding: 5px 12px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    font-size: 0.8em;
+    letter-spacing: 0.5px;
+  }
+  
+  .pagado {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #a5d6a7;
+  }
+  
+  .pendiente {
+    background-color: #ffebee;
+    color: #c62828;
+    border: 1px solid #ef9a9a;
+  }
+  
+  .cambiar-estado {
+    background-color: #ff9800;
+    color: white;
+    border: none;
+    padding: 6px 15px;
+    cursor: pointer;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.8em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .cambiar-estado:hover {
+    background-color: #fb8c00;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+  }
+  
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🏀 Categoría: <span id="categoria-nombre">Cargando...</span></h1>
+    <a href="VistaGeneral.html">⬅ Volver al panel</a>
+  </header>
+
+  <main>
+    <h2>Jugadores inscritos</h2>
+    <div id="jugadores-lista">
+      <!-- Se cargará la lista de jugadores aquí -->
+    </div>
+  </main>
+
+  <script type="module" src="/Registro_Basquet/Principal/detalles.js"></script>
+</body>
+</html>
+

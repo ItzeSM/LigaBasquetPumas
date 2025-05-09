@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel - Club de Básquetbol</title>
+  
+ 
+  <script type="importmap">
+    {
+      "imports": {
+        "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.39.7"
+      }
+    }
+  </script>
+  <style>
+
+    :root {
+  --primary: #FF6B00;
+  --primary-dark: #E05A00;
+  --secondary: #2D3748;
+  --accent: #FFA500;
+  --light: #FFF4E6;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #f8f8f8;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ff6b00' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+.basketball-pattern {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0.03;
+  z-index: -1;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='%23FF6B00' stroke-width='3'/%3E%3Cpath d='M50,10 C50,90 50,90 50,90' stroke='%23FF6B00' stroke-width='3' fill='none'/%3E%3Cpath d='M10,50 C90,50 90,50 90,50' stroke='%23FF6B00' stroke-width='3' fill='none'/%3E%3Cpath d='M25,20 C75,80 75,80 75,80' stroke='%23FF6B00' stroke-width='3' fill='none'/%3E%3Cpath d='M80,25 C20,75 20,75 20,75' stroke='%23FF6B00' stroke-width='3' fill='none'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+header {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: white;
+  padding: 1.5rem 2rem;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+header p {
+  margin-top: 0.5rem;
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+.tablero {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f5f5f5;
+  color: #333;
+}
+
+header {
+  background: #f1791e;
+  color: white;
+  padding: 1.2rem;
+  text-align: center;
+}
+
+.tablero {
+  padding: 1.5rem;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.categorias {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.categoria {
+  background: white;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.categoria h3 {
+  margin-top: 0;
+  color: #1e90ff;
+}
+
+.categoria button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background: #2e79db;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+}
+
+.categoria button:hover {
+  background: #db690b;
+}
+
+.acciones {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.acciones button {
+  margin: 0.5rem;
+  padding: 0.6rem 1rem;
+  background: #333;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.acciones button:hover {
+  background: #555;
+}
+
+/* Estilo para los detalles de la categoría */
+#jugadores-lista {
+margin-top: 20px;
+}
+
+#jugadores-lista ul {
+list-style-type: none;
+padding: 0;
+}
+
+#jugadores-lista li {
+background-color: #f9f9f9;
+padding: 15px;
+margin-bottom: 10px;
+border-radius: 8px;
+border: 1px solid #ddd;
+}
+
+button {
+margin-top: 10px;
+padding: 10px;
+background-color: #28a745;
+color: white;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+}
+
+button:hover {
+background-color: #218838;
+}
+  </style>
+</head>
+<body>
+  
+  <header>
+    <h1>🏀 Club de Básquetbol Pumas 🏀</h1>
+    <p>Bienvenido, Administrador</p>
+  </header>
+
+  <main class="tablero">
+    <h2>Resumen por Categoría</h2>
+
+    <div id="categorias" class="categorias">
+      <!-- Las categorías se cargarán dinámicamente aquí -->
+    </div>
+
+    <div class="acciones">
+      <button onclick="window.location.href='../Registro/formularioInscripcion.html';">➕ Agregar jugador</button>
+
+      
+      <button id="logout">🚪 Cerrar sesión</button>
+    </div>
+  </main>
+
+  <script type="module" src="/Registro_Basquet/Principal/panel.js"></script>
+</body>
+</html>

@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro de Alumno - Liga de Básquetbol</title>
+  <script type="importmap">
+    {
+      "imports": {
+        "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.39.7"
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #ff6b00;
+      --primary-dark: #e05a00;
+      --secondary: #212121;
+      --secondary-light: #424242;
+      --accent: #ffa726;
+      --light: #f8f9fa;
+      --dark: #212121;
+      --gray-100: #f8f9fa;
+      --gray-200: #e9ecef;
+      --gray-300: #dee2e6;
+      --gray-400: #ced4da;
+      --gray-500: #adb5bd;
+      --gray-600: #6c757d;
+      --success: #4caf50;
+      --error: #f44336;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      
+      background-position: center;
+      background-attachment: fixed;
+      color: var(--dark);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 800px;
+      background-color: rgba(255, 255, 255, 0.95);
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 30px;
+    }
+
+    .header {
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      padding: 25px 30px;
+      color: white;
+      position: relative;
+      text-align: center;
+    }
+
+    .header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath fill='%23ffffff' fill-opacity='0.1' d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z'%3E%3C/path%3E%3C/svg%3E");
+      opacity: 0.3;
+    }
+
+    .basketball-icon {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      background-color: var(--primary);
+      border-radius: 50%;
+      top: -15px;
+      left: -15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-container {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: white;
+      border-radius: 50%;
+      padding: 5px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      z-index: 10;
+    }
+
+    .logo-img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      font-weight: 700;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 1;
+    }
+
+    .form-container {
+      padding: 30px;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 5px;
+    }
+
+    .form-group.full-width {
+      grid-column: span 2;
+    }
+
+    .section-title {
+      grid-column: span 2;
+      font-size: 1.3rem;
+      color: var(--primary);
+      margin: 15px 0 10px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--gray-200);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+    }
+
+    .section-title::before {
+      content: '🏀';
+      margin-right: 10px;
+      font-size: 1.4rem;
+    }
+
+    label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 6px;
+      color: var(--secondary);
+      font-size: 0.9rem;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: 8px;
+      border: 1px solid var(--gray-300);
+      background-color: var(--gray-100);
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.2);
+      background-color: white;
+    }
+
+    input.error, select.error, textarea.error {
+      border-color: var(--error);
+      background-color: rgba(244, 67, 54, 0.05);
+    }
+
+    .error-message {
+      color: var(--error);
+      font-size: 0.8rem;
+      margin-top: 4px;
+      display: none;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 5px;
+    }
+
+    .btn-opcion {
+      flex: 1;
+      background-color: white;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+      text-align: center;
+      font-weight: 600;
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+    }
+
+    .btn-opcion:hover {
+      background-color: rgba(255, 107, 0, 0.1);
+    }
+
+    .btn-activo {
+      background-color: var(--primary) !important;
+      color: white !important;
+      border: 2px solid var(--primary-dark) !important;
+    }
+
+    button[type="submit"] {
+      grid-column: span 2;
+      background: linear-gradient(to right, var(--primary), var(--primary-dark));
+      color: white;
+      cursor: pointer;
+      border: none;
+      border-radius: 8px;
+      padding: 14px;
+      width: 100%;
+      font-size: 1rem;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      margin-top: 20px;
+      box-shadow: 0 4px 10px rgba(255, 107, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    button[type="submit"]::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: rgba(255, 255, 255, 0.2);
+      transform: rotate(45deg);
+      transition: all 0.5s ease;
+      opacity: 0;
+    }
+
+    button[type="submit"]:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(255, 107, 0, 0.4);
+    }
+
+    button[type="submit"]:hover::after {
+      left: 100%;
+      opacity: 0.3;
+    }
+
+    button[type="submit"]:active {
+      transform: translateY(0);
+    }
+
+    .oculto {
+      display: none;
+    }
+
+    #monto_pago_container {
+      background-color: var(--light);
+      border: 2px solid var(--success);
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 20px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #monto_pago_container h3 {
+      color: var(--success);
+      margin-bottom: 10px;
+    }
+
+    #monto_pago {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .container {
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    .basketball-icon {
+      animation: bounce 2s infinite ease-in-out;
+    }
+
+    @media (max-width: 768px) {
+      form {
+        grid-template-columns: 1fr;
+      }
+
+      .form-group.full-width,
+      .section-title,
+      button[type="submit"] {
+        grid-column: span 1;
+      }
+
+      .header {
+        padding: 15px;
+      }
+
+      .logo-img {
+        width: 60px;
+        height: 60px;
+      }
+
+      .form-container {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="basketball-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M4.93 4.93l14.14 14.14"></path>
+          <path d="M14.83 9.17l-5.66 5.66"></path>
+          <path d="M9.17 9.17l5.66 5.66"></path>
+        </svg>
+      </div>
+      <h1>Registro de Alumno - Liga de Básquetbol</h1>
+      <div class="logo-container">
+        <img src="imagenes/logop.jpeg" alt="Logo de la liga" class="logo-img">
+      </div>
+    </div>
+
+    <div class="form-container">
+      <form id="form-inscripcion">
+        <div class="section-title">Información Personal</div>
+        
+        <div class="form-group">
+          <label for="nombre">Nombre:</label>
+          <input type="text" id="nombre" required>
+          <div class="error-message" id="nombre-error">Este campo es obligatorio</div>
+        </div>
+
+        <div class="form-group">
+          <label for="apellido_paterno">Apellido Paterno:</label>
+          <input type="text" id="apellido_paterno" required>
+          <div class="error-message" id="apellido_paterno-error">Este campo es obligatorio</div>
+        </div>
+
+        <div class="form-group">
+          <label for="apellido_materno">Apellido Materno:</label>
+          <input type="text" id="apellido_materno" required>
+          <div class="error-message" id="apellido_materno-error">Este campo es obligatorio</div>
+        </div>
+
+        <div class="form-group">
+          <label for="genero">Género:</label>
+          <select name="genero" id="genero" required>
+            <option value="">Selecciona una opción</option>
+            <option value="Masculino">Masculino</option>
+            <option value="Femenino">Femenino</option>
+            <option value="Otro">Otro</option>
+          </select>
+          <div class="error-message" id="genero-error">Selecciona una opción</div>
+        </div>
+
+        <div class="form-group">
+          <label for="curp">CURP:</label>
+          <input type="text" id="curp" required>
+          <div class="error-message" id="curp-error">Este campo es obligatorio</div>
+        </div>
+
+        <div class="form-group">
+          <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+          <input type="date" id="fecha_nacimiento" required>
+          <div class="error-message" id="fecha_nacimiento-error">Selecciona una fecha válida</div>
+        </div>
+
+        <div class="section-title">Información de Contacto</div>
+
+        <div class="form-group">
+          <label for="telefono">Teléfono:</label>
+          <input type="text" id="telefono" required placeholder="10 dígitos">
+          <div class="error-message" id="telefono-error">Ingresa un número de 10 dígitos</div>
+        </div>
+
+        <div class="form-group">
+          <label for="correo">Correo Electrónico:</label>
+          <input type="email" id="correo" placeholder="ejemplo@correo.com">
+          <div class="error-message" id="correo-error">Ingresa un correo electrónico válido</div>
+        </div>
+
+        <div class="form-group full-width">
+          <label for="nombre_tutor">Nombre del Tutor:</label>
+          <input type="text" id="nombre_tutor" required>
+          <div class="error-message" id="nombre_tutor-error">Este campo es obligatorio</div>
+        </div>
+
+        <div class="section-title">Información Médica</div>
+
+        <!-- Alergias -->
+        <div class="form-group">
+          <label>¿Tiene alergias?</label>
+          <div class="btn-group">
+            <button type="button" id="alergias_si" class="btn-opcion">Sí</button>
+            <button type="button" id="alergias_no" class="btn-opcion">No</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div id="alergias_detalles_container" class="oculto">
+            <label for="alergias_detalles">Especifica las alergias:</label>
+            <textarea id="alergias_detalles"></textarea>
+          </div>
+        </div>
+
+        <!-- Cirugías -->
+        <div class="form-group">
+          <label>¿Ha tenido cirugías?</label>
+          <div class="btn-group">
+            <button type="button" id="cirugias_si" class="btn-opcion">Sí</button>
+            <button type="button" id="cirugias_no" class="btn-opcion">No</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div id="cirugias_detalles_container" class="oculto">
+            <label for="cirugias_detalles">Especifica las cirugías:</label>
+            <textarea id="cirugias_detalles"></textarea>
+          </div>
+        </div>
+
+        <!-- Afecciones -->
+        <div class="form-group">
+          <label>¿Tiene afecciones?</label>
+          <div class="btn-group">
+            <button type="button" id="afecciones_si" class="btn-opcion">Sí</button>
+            <button type="button" id="afecciones_no" class="btn-opcion">No</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div id="afecciones_detalles_container" class="oculto">
+            <label for="afecciones_detalles">Especifica las afecciones:</label>
+            <textarea id="afecciones_detalles"></textarea>
+          </div>
+        </div>
+
+        <button type="submit">REGISTRAR ALUMNO</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="monto_pago_container" class="oculto">
+    <h3>Monto a pagar:</h3>
+    <p id="monto_pago"></p>
+  </div>
+
+  <script>
+    // Funcionalidad para los botones de alergias
+    document.getElementById('alergias_si').addEventListener('click', function() {
+      this.classList.add('btn-activo');
+      document.getElementById('alergias_no').classList.remove('btn-activo');
+      document.getElementById('alergias_detalles_container').classList.remove('oculto');
+    });
+    
+    document.getElementById('alergias_no').addEventListener('click', function() {
+      this.classList.add('btn-activo');
+      document.getElementById('alergias_si').classList.remove('btn-activo');
+      document.getElementById('alergias_detalles_container').classList.add('oculto');
+    });
+    
+    // Funcionalidad para los botones de cirugías
+    document.getElementById('cirugias_si').addEventListener('click', function() {
+      this.classList.add('btn-activo');
+      document.getElementById('cirugias_no').classList.remove('btn-activo');
+      document.getElementById('cirugias_detalles_container').classList.remove('oculto');
+    });
+    
+    document.getElementById('cirugias_no').addEventListener('click', function() {
+      this.classList.add('btn-activo');
+      document.getElementById('cirugias_si').classList.remove('btn-activo');
+      document.getElementById('cirugias_detalles_container').classList.add('oculto');
+    });
+    
+    // Funcionalidad para los botones de afecciones
+    document.getElementById('afecciones_si').addEventListener('click', function() {
+      this.classList.add('btn-activo');
+      document.getElementById('afecciones_no').classList.remove('btn-activo');
+      document.getElementById('afecciones_detalles_container').classList.remove('oculto');
+    });
+    
+    document.getElementById('afecciones_no').addEventListener('click', function() {
+      this.classList.add('btn-activo');
+      document.getElementById('afecciones_si').classList.remove('btn-activo');
+      document.getElementById('afecciones_detalles_container').classList.add('oculto');
+    });
+
+    // Convertir texto a mayúsculas excepto el correo
+    const inputsToUppercase = document.querySelectorAll('input:not(#correo)');
+    inputsToUppercase.forEach(input => {
+      input.addEventListener('input', function() {
+        this.value = this.value.toUpperCase();
+      });
+    });
+
+    // Validación de correo electrónico
+    const emailInput = document.getElementById('correo');
+    emailInput.addEventListener('blur', function() {
+      const emailError = document.getElementById('correo-error');
+      if (this.value && !this.value.includes('@')) {
+        this.classList.add('error');
+        emailError.style.display = 'block';
+        emailError.textContent = 'El correo debe contener @';
+      } else {
+        this.classList.remove('error');
+        emailError.style.display = 'none';
+      }
+    });
+
+    // Validación de teléfono (10 dígitos)
+    const phoneInput = document.getElementById('telefono');
+    phoneInput.addEventListener('input', function() {
+      // Permitir solo números
+      this.value = this.value.replace(/[^0-9]/g, '');
+      
+      // Limitar a 10 dígitos
+      if (this.value.length > 10) {
+        this.value = this.value.slice(0, 10);
+      }
+    });
+
+    phoneInput.addEventListener('blur', function() {
+      const phoneError = document.getElementById('telefono-error');
+      if (this.value.length !== 10) {
+        this.classList.add('error');
+        phoneError.style.display = 'block';
+      } else {
+        this.classList.remove('error');
+        phoneError.style.display = 'none';
+      }
+    });
+
+    // Validación del formulario antes de enviar
+    document.getElementById('form-inscripcion').addEventListener('submit', function(e) {
+      let isValid = true;
+      
+      // Validar teléfono
+      if (phoneInput.value.length !== 10) {
+        phoneInput.classList.add('error');
+        document.getElementById('telefono-error').style.display = 'block';
+        isValid = false;
+      }
+      
+      // Validar correo si está presente
+      if (emailInput.value && !emailInput.value.includes('@')) {
+        emailInput.classList.add('error');
+        document.getElementById('correo-error').style.display = 'block';
+        isValid = false;
+      }
+      
+      if (!isValid) {
+        e.preventDefault();
+      }
+    });
+  </script>
+
+  <script type="module" src="conexionSupabase.js"></script>
+  <script type="module" src="registrarAlumno.js"></script>
+</body>
+</html>
